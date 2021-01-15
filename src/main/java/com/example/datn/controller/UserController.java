@@ -140,32 +140,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/new-password/{id}", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseEntity<User> updatePassword(@RequestParam("token") String token, @PathVariable Long id, @RequestBody User user) {
-        VerificationToken verificationToken = verificationTokenService.findByToken(token);
-        boolean isExpired = verificationToken.isExpired();
-        if (token == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        if (isExpired) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        Optional<User> userOptional = userService.findById(id);
-        if (!userOptional.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        if (!userService.isCorrectConfirmPassword(user)) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        String newPassword = passwordEncoder.encode(user.getPassword());
-        String confirmPassword = passwordEncoder.encode(user.getConfirmPassword());
-        user.setPassword(newPassword);
-        user.setConfirmPassword(confirmPassword);
-        userService.save(user);
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }
-
-    @PutMapping(value = "/new-password/{id}")
+    @PutMapping(value = "users/{id}/new-password")
     public ResponseEntity<User> updatePassword(@PathVariable Long id, @RequestBody User user) {
         Optional<User> userOptional = this.userService.findById(id);
         if (!userOptional.isPresent()) {
@@ -184,4 +159,23 @@ public class UserController {
         userService.save(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+    @PutMapping(value = "users/{username}/new-password-username")
+    public ResponseEntity<User> updatePasswordByUsername(@PathVariable String username, @RequestBody User user) {
+        User userOptional = this.userService.findByUsername(username);
+        user.setId(userOptional.getId());
+        user.setUsername(userOptional.getUsername());
+        user.setEmail(userOptional.getEmail());
+        user.setEnabled(userOptional.isEnabled());
+        user.setRoles(userOptional.getRoles());
+        user.setName(userOptional.getName());
+        user.setImageUrls(userOptional.getImageUrls());
+        user.setPhoneNumber(userOptional.getPhoneNumber());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setConfirmPassword(passwordEncoder.encode(user.getConfirmPassword()));
+        userService.save(user);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+
 }
