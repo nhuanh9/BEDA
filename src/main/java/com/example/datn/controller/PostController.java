@@ -29,7 +29,7 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity<Iterable<Post>> getAll() {
-        Iterable<Post> posts = postService.findAll();
+        Iterable<Post> posts = postService.findTop4New();
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 

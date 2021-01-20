@@ -19,6 +19,10 @@ public interface IPostRepository extends JpaRepository<Post, Long> {
     @Query("UPDATE Post p SET p.status = 0 WHERE p.id =:id")
     void changStatusPostFalse(@Param("id") Long id);
 
+    @Modifying
+    @Query("select p from Post p order by p.id desc")
+    Iterable<Post> findTop4New();
+
     Iterable<Post> findByContentContainingAndUserId(String content, Long id);
 
     Optional<Post> findById(Long id);

@@ -56,6 +56,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Iterable<Post> findTop4New() {
+        return postRepository.findTop4New();
+    }
+
+    @Override
     public void remove(Long id) {
         postRepository.deleteById(id);
     }
