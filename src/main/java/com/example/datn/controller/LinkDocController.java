@@ -1,8 +1,8 @@
 package com.example.datn.controller;
 
-import com.example.datn.model.Image;
+import com.example.datn.model.LinkDoc;
 import com.example.datn.model.Post;
-import com.example.datn.model.User;
+import com.example.datn.service.LinkDocService;
 import com.example.datn.service.PostService;
 import com.example.datn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,40 +12,34 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 @RestController
 @PropertySource("classpath:application.properties")
 @CrossOrigin("*")
-@RequestMapping("/posts")
-public class PostController {
+@RequestMapping("/linkdocs")
+public class LinkDocController {
+
     @Autowired
-    PostService postService;
+    LinkDocService linkDocService;
 
     @Autowired
     UserService userService;
 
-    @GetMapping("/top-4")
-    public ResponseEntity<Iterable<Post>> getTop4() {
-        Iterable<Post> posts = postService.findTop4New();
-        return new ResponseEntity<>(posts, HttpStatus.OK);
-    }
     @GetMapping
-    public ResponseEntity<Iterable<Post>> getAll() {
-        Iterable<Post> posts = postService.findAll();
-        return new ResponseEntity<>(posts, HttpStatus.OK);
+    public ResponseEntity<Iterable<LinkDoc>> getAll() {
+        Iterable<LinkDoc> linkDocs = linkDocService.findAll();
+        return new ResponseEntity<>(linkDocs, HttpStatus.OK);
     }
 
 
     @PostMapping
-    public ResponseEntity save(@RequestBody Post post) {
+    public ResponseEntity save(@RequestBody LinkDoc linkDoc) {
         Date date = new Date(Calendar.getInstance().getTime().getTime());
-        post.setCreateAt(date);
-        post.setStatus(1);
-        post.setLikes((long) 0);
-        postService.save(post);
+        linkDoc.setCreateAt(date);
+        linkDoc.setStatus(1);
+        linkDoc.setLikes((long) 0);
+        linkDocService.save(linkDoc);
         return new ResponseEntity(HttpStatus.OK);
     }
 }

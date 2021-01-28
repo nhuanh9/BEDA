@@ -14,7 +14,6 @@ public class PostServiceImpl implements PostService {
     @Autowired
     IPostRepository postRepository;
 
-
     @Override
     public void changStatusPostTrue(Long id) {
         postRepository.changStatusPostTrue(id);
