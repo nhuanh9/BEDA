@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LinkDocRepository extends JpaRepository<LinkDoc, Long> {
+    Iterable<LinkDoc> findAllByCategoryName(String categoryName);
+    Iterable<LinkDoc> findAllByCategoryId(Long categoryId);
 }

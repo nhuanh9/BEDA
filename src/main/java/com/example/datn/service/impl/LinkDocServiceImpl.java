@@ -33,4 +33,14 @@ public class LinkDocServiceImpl implements LinkDocService {
     public void remove(Long id) {
         linkDocRepository.deleteById(id);
     }
+
+    @Override
+    public Iterable<LinkDoc> findAllByCategoryName(String categoryName) {
+        return linkDocRepository.findAllByCategoryName(categoryName);
+    }
+
+    @Override
+    public Iterable<LinkDoc> findAllByCategoryId(Long categoryId) {
+        return linkDocRepository.findAllByCategoryId(categoryId);
+    }
 }
