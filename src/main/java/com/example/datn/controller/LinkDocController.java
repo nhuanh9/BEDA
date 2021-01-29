@@ -33,7 +33,7 @@ public class LinkDocController {
     }
 
 
-    @GetMapping("/{categoryId}")
+    @GetMapping("/categories/{categoryId}")
     public ResponseEntity<Iterable<LinkDoc>> getAllByCategoryName(@PathVariable Long categoryId) {
         Iterable<LinkDoc> linkDocs = linkDocService.findAllByCategoryId(categoryId);
         return new ResponseEntity<>(linkDocs, HttpStatus.OK);

@@ -55,6 +55,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Iterable<Post> findAllByCategoryId(Long categoryId) {
+        return postRepository.findAllByCategoryId(categoryId);
+    }
+
+    @Override
     public Iterable<Post> findTop4New() {
         return postRepository.findTop4New();
     }

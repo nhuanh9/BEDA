@@ -21,5 +21,7 @@ public interface PostService extends IGeneralService<Post> {
 
     Optional<Post> findById(Long id);
 
+    Iterable<Post> findAllByCategoryId(Long categoryId);
+
     Iterable<Post> findTop4New();
 }

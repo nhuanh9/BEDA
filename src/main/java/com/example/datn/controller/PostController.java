@@ -1,6 +1,7 @@
 package com.example.datn.controller;
 
 import com.example.datn.model.Image;
+import com.example.datn.model.LinkDoc;
 import com.example.datn.model.Post;
 import com.example.datn.model.User;
 import com.example.datn.service.PostService;
@@ -32,12 +33,18 @@ public class PostController {
         Iterable<Post> posts = postService.findTop4New();
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
+
     @GetMapping
     public ResponseEntity<Iterable<Post>> getAll() {
         Iterable<Post> posts = postService.findAll();
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
+    @GetMapping("/categories/{categoryId}")
+    public ResponseEntity<Iterable<Post>> getAllByCategoryId(@PathVariable Long categoryId) {
+        Iterable<Post> linkDocs = postService.findAllByCategoryId(categoryId);
+        return new ResponseEntity<>(linkDocs, HttpStatus.OK);
+    }
 
     @PostMapping
     public ResponseEntity save(@RequestBody Post post) {

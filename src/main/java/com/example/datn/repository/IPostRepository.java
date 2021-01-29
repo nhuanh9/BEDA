@@ -1,5 +1,6 @@
 package com.example.datn.repository;
 
+import com.example.datn.model.LinkDoc;
 import com.example.datn.model.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -31,5 +32,6 @@ public interface IPostRepository extends JpaRepository<Post, Long> {
 
     Iterable<Post> findAllByStatus(int status);
 
+    Iterable<Post> findAllByCategoryId(Long categoryId);
 
 }
