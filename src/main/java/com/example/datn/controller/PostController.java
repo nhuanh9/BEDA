@@ -47,12 +47,12 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity save(@RequestBody Post post) {
+    public ResponseEntity<Post> save(@RequestBody Post post) {
         Date date = new Date(Calendar.getInstance().getTime().getTime());
         post.setCreateAt(date);
         post.setStatus(1);
         post.setLikes((long) 0);
         postService.save(post);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(post,HttpStatus.OK);
     }
 }
