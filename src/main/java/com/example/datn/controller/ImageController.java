@@ -2,15 +2,16 @@ package com.example.datn.controller;
 
 import com.example.datn.model.Category;
 import com.example.datn.model.Image;
+import com.example.datn.model.Post;
 import com.example.datn.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.Date;
+import java.util.Calendar;
 
 @RestController
 @PropertySource("classpath:application.properties")
@@ -24,5 +25,11 @@ public class ImageController {
     public ResponseEntity<Iterable<Image>> getAll() {
         Iterable<Image> images = imageService.findAll();
         return new ResponseEntity<>(images, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Image> save(@RequestBody Image image) {
+        imageService.save(image);
+        return new ResponseEntity<>(image,HttpStatus.OK);
     }
 }
