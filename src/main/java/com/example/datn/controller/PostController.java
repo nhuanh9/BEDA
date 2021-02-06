@@ -53,6 +53,12 @@ public class PostController {
         post.setStatus(1);
         post.setLikes((long) 0);
         postService.save(post);
-        return new ResponseEntity(post,HttpStatus.OK);
+        return new ResponseEntity(post, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Post> get(@PathVariable Long id) {
+        Post post = postService.findById(id).get();
+        return new ResponseEntity<>(post, HttpStatus.OK);
     }
 }
