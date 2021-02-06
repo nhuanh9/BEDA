@@ -1,9 +1,7 @@
 package com.example.datn.controller;
 
-import com.example.datn.model.Image;
-import com.example.datn.model.LinkDoc;
-import com.example.datn.model.Post;
-import com.example.datn.model.User;
+import com.example.datn.model.*;
+import com.example.datn.service.CommentService;
 import com.example.datn.service.PostService;
 import com.example.datn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +14,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @PropertySource("classpath:application.properties")
@@ -27,6 +26,8 @@ public class PostController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    CommentService commentService;
 
     @GetMapping("/top-4")
     public ResponseEntity<Iterable<Post>> getTop4() {
@@ -60,5 +61,20 @@ public class PostController {
     public ResponseEntity<Post> get(@PathVariable Long id) {
         Post post = postService.findById(id).get();
         return new ResponseEntity<>(post, HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/comments")
+    public ResponseEntity<Optional<Post>> comment(@PathVariable("id") Long id, @RequestBody Comment commentForm) {
+        Date date = new Date(Calendar.getInstance().getTime().getTime());
+        commentForm.setCreateAt(date);
+        commentService.save(commentForm);
+        Optional<Post> postEntity = postService.findById(id);
+        if (postEntity.isPresent()) {
+            postEntity.get().getListComment().add(commentForm);
+            postService.save(postEntity.get());
+            return new ResponseEntity<>(postEntity, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
