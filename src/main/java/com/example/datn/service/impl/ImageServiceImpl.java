@@ -32,4 +32,9 @@ public class ImageServiceImpl implements ImageService {
     public void remove(Long id) {
         imageRepository.deleteById(id);
     }
+
+    @Override
+    public Iterable<Image> findAllByPostId(Long id) {
+        return imageRepository.findAllByPostId(id);
+    }
 }

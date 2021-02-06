@@ -27,9 +27,15 @@ public class ImageController {
         return new ResponseEntity<>(images, HttpStatus.OK);
     }
 
+    @GetMapping("/{post-id}")
+    public ResponseEntity<Iterable<Image>> getAll(@PathVariable(name = "post-id") Long postId) {
+        Iterable<Image> images = imageService.findAllByPostId(postId);
+        return new ResponseEntity<>(images, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Image> save(@RequestBody Image image) {
         imageService.save(image);
-        return new ResponseEntity<>(image,HttpStatus.OK);
+        return new ResponseEntity<>(image, HttpStatus.OK);
     }
 }
