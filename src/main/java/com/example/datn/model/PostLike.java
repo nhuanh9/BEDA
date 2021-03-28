@@ -1,31 +1,28 @@
 package com.example.datn.model;
 
+
 import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Data
-public class OrderSeminar {
+public class PostLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Date createAt;
-    private Date time;
-
-    private String content;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @JoinColumn(name = "post_id")
+    private Post postEntity;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private User user;
 
-    String note;
+    private boolean isLiked;
+
 }
