@@ -7,19 +7,20 @@ import java.sql.Date;
 
 @Entity
 @Data
-public class Comment {
+public class CommentLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String content;
-
     private Date createAt;
 
-    private Long likes;
-
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Comment comment;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    private boolean isLiked;
 }
