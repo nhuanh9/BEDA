@@ -35,4 +35,6 @@ public class Post {
 
     @OneToMany(targetEntity = Comment.class)
     private List<Comment> listComment;
+
+    private String description;
 }
