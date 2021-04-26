@@ -43,5 +43,9 @@ public class User implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<com.example.datn.model.Role> roles;
 
+    private Long posts;
+    private Long comments;
+    private Long linkDocs;
+
 
 }
