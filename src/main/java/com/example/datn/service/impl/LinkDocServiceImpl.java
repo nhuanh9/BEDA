@@ -43,4 +43,9 @@ public class LinkDocServiceImpl implements LinkDocService {
     public Iterable<LinkDoc> findAllByCategoryId(Long categoryId) {
         return linkDocRepository.findAllByCategoryId(categoryId);
     }
+
+    @Override
+    public Iterable<LinkDoc> findAllByDescriptionContains(String des) {
+        return linkDocRepository.findAllByDescriptionContains(des);
+    }
 }

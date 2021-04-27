@@ -1,7 +1,7 @@
-package com.example.media.service;
+package com.example.datn.service;
 
-import com.example.media.model.UserLikePost;
-import com.example.media.model.entity.PostLike;
+
+import com.example.datn.model.PostLike;
 
 import java.util.Optional;
 

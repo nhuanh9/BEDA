@@ -127,5 +127,22 @@ public class UserServiceImpl implements UserService {
     public void delete(User user) {
         userRepository.delete(user);
     }
+
+    @Override
+    public Iterable<User> findTopPosts() {
+        return userRepository.findTopPosts();
+    }
+
+    @Override
+    public Iterable<User> findTopLinkDocs() {
+        return userRepository.findTopLinkDocs();
+    }
+
+    @Override
+    public Iterable<User> findTopComments() {
+        return userRepository.findTopComments();
+    }
+
+
 }
 

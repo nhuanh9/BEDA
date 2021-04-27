@@ -2,6 +2,7 @@ package com.example.datn.controller;
 
 import com.example.datn.model.LinkDoc;
 import com.example.datn.model.Post;
+import com.example.datn.model.User;
 import com.example.datn.service.LinkDocService;
 import com.example.datn.service.PostService;
 import com.example.datn.service.UserService;
@@ -46,6 +47,17 @@ public class LinkDocController {
         linkDoc.setStatus(1);
         linkDoc.setLikes((long) 0);
         linkDocService.save(linkDoc);
+        User user = linkDoc.getUser();
+        Long oldPosts = user.getPosts();
+        oldPosts = oldPosts == null ? Long.valueOf(0) : oldPosts;
+        user.setPosts(oldPosts + Long.valueOf(1));
+        userService.save(user);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("/des/{des}")
+    public ResponseEntity<Iterable<LinkDoc>> getAllByDes(@PathVariable("des") String des) {
+        Iterable<LinkDoc> linkDocs = linkDocService.findAllByDescriptionContains(des);
+        return new ResponseEntity<>(linkDocs, HttpStatus.OK);
     }
 }

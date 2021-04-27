@@ -2,7 +2,6 @@ package com.example.datn.service;
 
 
 import com.example.datn.model.Post;
-import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -24,4 +23,7 @@ public interface PostService extends IGeneralService<Post> {
     Iterable<Post> findAllByCategoryId(Long categoryId);
 
     Iterable<Post> findTop4New();
+
+    Iterable<Post> findAllByDescriptionContains(String des);
+
 }

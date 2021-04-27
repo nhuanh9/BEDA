@@ -1,7 +1,6 @@
-package com.example.media.repository;
+package com.example.datn.repository;
 
-import com.example.media.model.UserLikePost;
-import com.example.media.model.entity.PostLike;
+import com.example.datn.model.PostLike;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,4 +11,6 @@ public interface PostLikeRepository extends JpaRepository<PostLike, Long> {
     Iterable<PostLike> findAllByPostEntityId(Long postId);
 
     void deleteAllByPostEntityId(Long id);
+
+
 }

@@ -1,9 +1,8 @@
-package com.example.media.service.impl;
+package com.example.datn.service.impl;
 
-import com.example.media.model.UserLikePost;
-import com.example.media.model.entity.PostLike;
-import com.example.media.repository.PostLikeRepository;
-import com.example.media.service.PostLikeService;
+import com.example.datn.model.PostLike;
+import com.example.datn.repository.PostLikeRepository;
+import com.example.datn.service.PostLikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

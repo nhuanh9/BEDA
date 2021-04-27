@@ -26,7 +26,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Iterable<Post> findAll() {
-        return postRepository.findAll();
+        return postRepository.findAllByOrderByLikes();
     }
 
     @Override
@@ -62,6 +62,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public Iterable<Post> findTop4New() {
         return postRepository.findTop4New();
+    }
+
+    @Override
+    public Iterable<Post> findAllByDescriptionContains(String des) {
+        return postRepository.findAllByDescriptionContains(des);
     }
 
     @Override

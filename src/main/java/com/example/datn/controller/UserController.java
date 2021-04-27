@@ -1,9 +1,7 @@
 package com.example.datn.controller;
 
-import com.example.datn.model.JwtResponse;
-import com.example.datn.model.Role;
-import com.example.datn.model.User;
-import com.example.datn.model.VerificationToken;
+import com.example.datn.model.*;
+import com.example.datn.service.PostService;
 import com.example.datn.service.RoleService;
 import com.example.datn.service.UserService;
 import com.example.datn.service.VerificationTokenService;
@@ -23,9 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @PropertySource("classpath:application.properties")
@@ -45,6 +41,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PostService postService;
 
     @Autowired
     private RoleService roleService;
@@ -81,6 +80,9 @@ public class UserController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setConfirmPassword(passwordEncoder.encode(user.getConfirmPassword()));
         user.setImageUrls("https://firebasestorage.googleapis.com/v0/b/spa-stay.appspot.com/o/img%2F1583085901039?alt=media&token=e396af18-3aa6-49ae-8ffc-22a55124b18a");
+        user.setPosts((long) 0);
+        user.setLinkDocs((long) 0);
+        user.setComments((long) 0);
         userService.save(user);
         VerificationToken token = new VerificationToken(user);
         token.setExpiryDate(10);
@@ -121,6 +123,27 @@ public class UserController {
         Optional<User> userOptional = this.userService.findById(id);
         return userOptional.map(user -> new ResponseEntity<>(user, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+    @GetMapping("/users/top-posts")
+    public ResponseEntity<Iterable<User>> getTopPosts() {
+        Iterable<User> users = this.userService.findTopPosts();
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+    @GetMapping("/users/top-linkdocs")
+    public ResponseEntity<Iterable<User>> getTopLinkDocs() {
+        Iterable<User> users = this.userService.findTopLinkDocs();
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+    @GetMapping("/users/top-comments")
+    public ResponseEntity<Iterable<User>> getTopComments() {
+        Iterable<User> users = this.userService.findTopComments();
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @GetMapping("/users/{id}/posts")
+    public ResponseEntity<Iterable<Post>> getUserPosts(@PathVariable Long id) {
+        Iterable<Post> posts = this.postService.findAllByUserId(id);
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
 
     @PutMapping("/users/{id}")
     public ResponseEntity<User> updateUserProfile(@PathVariable Long id, @RequestBody User user) {
@@ -135,8 +158,11 @@ public class UserController {
         user.setPassword(userOptional.get().getPassword());
         user.setRoles(userOptional.get().getRoles());
         user.setConfirmPassword(userOptional.get().getConfirmPassword());
-
+        user.setLinkDocs(userOptional.get().getLinkDocs());
+        user.setPosts(userOptional.get().getPosts());
+        user.setComments(userOptional.get().getComments());
         userService.save(user);
+        //
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
@@ -181,5 +207,25 @@ public class UserController {
     public ResponseEntity<Iterable<User>> getAll() {
         Iterable<User> users = userService.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @PutMapping("/users/{idUser}/posts")
+    public ResponseEntity editPost(@RequestBody Post postModel, @PathVariable Long idUser) {
+        User user = (userService.findById(idUser)).isPresent() ?
+                userService.findById(idUser).get() : null;
+        Post postEntity = postService.findById(postModel.getId()).get();
+        postEntity.setContent(postModel.getContent());
+        postService.save(postEntity);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("/users/{idUser}/posts/{idPost}")
+    public ResponseEntity deletePost(@PathVariable Long idUser, @PathVariable Long idPost) {
+        User user = (userService.findById(idUser)).isPresent() ?
+                userService.findById(idUser).get() : null;
+        Post postEntity = postService.findById(idPost).get();
+        postEntity.setStatus(0);
+        postService.save(postEntity);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

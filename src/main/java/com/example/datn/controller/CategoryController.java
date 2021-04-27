@@ -16,6 +16,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @PropertySource("classpath:application.properties")
@@ -32,6 +33,12 @@ public class CategoryController {
     public ResponseEntity<Iterable<Category>> getAll() {
         Iterable<Category> categories = categoryService.findAll();
         return new ResponseEntity<>(categories, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Category> getById(@PathVariable Long id) {
+        Optional<Category> category = categoryService.findById(id);
+        return new ResponseEntity<>(category.get(), HttpStatus.OK);
     }
 
 }

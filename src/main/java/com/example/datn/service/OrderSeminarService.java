@@ -1,4 +1,6 @@
 package com.example.datn.service;
 
-public interface OrderSeminarService {
+import com.example.datn.model.OrderSeminar;
+
+public interface OrderSeminarService extends IGeneralService<OrderSeminar> {
 }

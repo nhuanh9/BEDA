@@ -1,6 +1,8 @@
 package com.example.datn.service;
 
 import com.example.datn.model.User;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -29,4 +31,10 @@ public interface UserService extends UserDetailsService {
     boolean isCorrectConfirmPassword(User user);
 
     void delete(User user);
+
+    Iterable<User> findTopPosts();
+
+    Iterable<User> findTopLinkDocs();
+
+    Iterable<User> findTopComments();
 }
