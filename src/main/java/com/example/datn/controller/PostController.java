@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
@@ -32,13 +31,20 @@ public class PostController {
 
     @GetMapping("/top-4")
     public ResponseEntity<Iterable<Post>> getTop4() {
-        Iterable<Post> posts = postService.findTop4New();
+        Iterable<Post> posts = postService.findTop4Likes();
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
+    @GetMapping("/order-by-likes")
+    public ResponseEntity<Iterable<Post>> getAllByLikes() {
+        Iterable<Post> posts = postService.findAll();
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+
     @GetMapping
     public ResponseEntity<Iterable<Post>> getAll() {
-        Iterable<Post> posts = postService.findAll();
+        Iterable<Post> posts = postService.findAllOrderByCreateAt();
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 

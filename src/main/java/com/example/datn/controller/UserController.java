@@ -1,10 +1,7 @@
 package com.example.datn.controller;
 
 import com.example.datn.model.*;
-import com.example.datn.service.PostService;
-import com.example.datn.service.RoleService;
-import com.example.datn.service.UserService;
-import com.example.datn.service.VerificationTokenService;
+import com.example.datn.service.*;
 import com.example.datn.service.impl.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;

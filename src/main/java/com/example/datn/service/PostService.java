@@ -22,8 +22,9 @@ public interface PostService extends IGeneralService<Post> {
 
     Iterable<Post> findAllByCategoryId(Long categoryId);
 
-    Iterable<Post> findTop4New();
+    Iterable<Post> findTop4Likes();
 
     Iterable<Post> findAllByDescriptionContains(String des);
 
+    Iterable<Post> findAllOrderByCreateAt();
 }

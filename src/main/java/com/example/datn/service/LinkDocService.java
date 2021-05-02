@@ -2,6 +2,7 @@ package com.example.datn.service;
 
 import com.example.datn.model.LinkDoc;
 import com.example.datn.model.Post;
+import org.springframework.data.repository.query.Param;
 
 public interface LinkDocService extends IGeneralService<LinkDoc>{
     Iterable<LinkDoc> findAllByCategoryName(String categoryName);

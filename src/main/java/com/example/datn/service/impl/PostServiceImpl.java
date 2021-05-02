@@ -60,13 +60,18 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Iterable<Post> findTop4New() {
+    public Iterable<Post> findTop4Likes() {
         return postRepository.findTop4New();
     }
 
     @Override
     public Iterable<Post> findAllByDescriptionContains(String des) {
         return postRepository.findAllByDescriptionContains(des);
+    }
+
+    @Override
+    public Iterable<Post> findAllOrderByCreateAt() {
+        return postRepository.findAllOrderByCreateAt();
     }
 
     @Override
