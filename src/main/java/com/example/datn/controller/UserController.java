@@ -44,6 +44,8 @@ public class UserController {
 
     @Autowired
     private PostService postService;
+    @Autowired
+    private LinkDocService linkDocService;
 
     @Autowired
     private RoleService roleService;
@@ -143,6 +145,12 @@ public class UserController {
     public ResponseEntity<Iterable<Post>> getUserPosts(@PathVariable Long id) {
         Iterable<Post> posts = this.postService.findAllByUserId(id);
         return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    @GetMapping("/users/{id}/linkdocs")
+    public ResponseEntity<Iterable<LinkDoc>> getUserLinkDocs(@PathVariable Long id) {
+        Iterable<LinkDoc> linkDocs = this.linkDocService.findAllByUserId(id);
+        return new ResponseEntity<>(linkDocs, HttpStatus.OK);
     }
 
     @PutMapping("/users/{id}")
