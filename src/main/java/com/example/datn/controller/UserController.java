@@ -223,11 +223,27 @@ public class UserController {
         if (postModel.getCategory() != null) {
             postEntity.setCategory(postModel.getCategory());
         }
-        if (postModel.getContent() != null) {
+        if (postModel.getContent() != "") {
             postEntity.setContent(postModel.getContent());
         }
-        if (postModel.getDescription() != null) {
+        if (postModel.getDescription() != " ") {
             postEntity.setDescription(postModel.getDescription());
+        }
+
+        if (postModel.getCreateAt() != null) {
+            postEntity.setCreateAt(postModel.getCreateAt());
+        }
+        if (postModel.getUser() != null) {
+            postEntity.setUser(postModel.getUser());
+        }
+        if (postModel.getLikes() != null) {
+            postEntity.setLikes(postModel.getLikes());
+        }
+        if (postModel.getListComment() != null) {
+            postEntity.setListComment(postModel.getListComment());
+        }
+        if (postModel.getImgs().size() != 0) {
+            postEntity.setImgs(postModel.getImgs());
         }
         postService.save(postEntity);
         return new ResponseEntity(HttpStatus.OK);
@@ -253,9 +269,7 @@ public class UserController {
         if (linkdoc.getUser() != null) {
             linkDoc1.setUser(linkdoc.getUser());
         }
-        if (linkdoc.getCategory() != null) {
-            linkDoc1.setCategory(linkdoc.getCategory());
-        }if (linkdoc.getLikes() != null) {
+        if (linkdoc.getLikes() != null) {
             linkDoc1.setLikes(linkdoc.getLikes());
         }
         if (linkdoc.getLink() != "") {
