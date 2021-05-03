@@ -9,4 +9,5 @@ public interface LinkDocService extends IGeneralService<LinkDoc>{
     Iterable<LinkDoc> findAllByCategoryId(Long categoryId);
     Iterable<LinkDoc> findAllByDescriptionContains(String des);
     Iterable<LinkDoc> findAllByUserId(@Param("id") Long id);
+    Iterable<LinkDoc> findAllByDesContains(String des);
 }

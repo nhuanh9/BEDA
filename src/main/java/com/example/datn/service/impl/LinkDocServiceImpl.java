@@ -53,4 +53,9 @@ public class LinkDocServiceImpl implements LinkDocService {
     public Iterable<LinkDoc> findAllByUserId(Long id) {
         return linkDocRepository.findAllByUserId(id);
     }
+
+    @Override
+    public Iterable<LinkDoc> findAllByDesContains(String des) {
+        return linkDocRepository.findAllByDesContains(des);
+    }
 }

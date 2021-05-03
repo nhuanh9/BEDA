@@ -11,11 +11,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LinkDocRepository extends JpaRepository<LinkDoc, Long> {
     Iterable<LinkDoc> findAllByCategoryName(String categoryName);
+
     Iterable<LinkDoc> findAllByCategoryId(Long categoryId);
+
     Iterable<LinkDoc> findAllByDescriptionContains(String des);
 
     @Modifying
     @Query(value = "select * from link_doc where status = 1 and user_id = :id", nativeQuery = true)
     Iterable<LinkDoc> findAllByUserId(@Param("id") Long id);
 
+    Iterable<LinkDoc> findAllByDesContains(String des);
 }

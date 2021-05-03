@@ -244,14 +244,28 @@ public class UserController {
     @PutMapping("/users/{idUser}/linkdocs")
     public ResponseEntity editLinkDoc(@RequestBody LinkDoc linkdoc, @PathVariable Long idUser) {
         LinkDoc linkDoc1 = linkDocService.findById(linkdoc.getId()).get();
-        if (linkdoc.getCategory() !=null) {
+        if (linkdoc.getCategory() != null) {
             linkDoc1.setCategory(linkdoc.getCategory());
         }
-        if (linkdoc.getLink() !=null) {
+        if (linkdoc.getCreateAt() != null) {
+            linkDoc1.setCreateAt(linkdoc.getCreateAt());
+        }
+        if (linkdoc.getUser() != null) {
+            linkDoc1.setUser(linkdoc.getUser());
+        }
+        if (linkdoc.getCategory() != null) {
+            linkDoc1.setCategory(linkdoc.getCategory());
+        }if (linkdoc.getLikes() != null) {
+            linkDoc1.setLikes(linkdoc.getLikes());
+        }
+        if (linkdoc.getLink() != "") {
             linkDoc1.setLink(linkdoc.getLink());
         }
-        if (linkdoc.getDescription() !=null) {
+        if (linkdoc.getDescription() != "") {
             linkDoc1.setDescription(linkdoc.getDescription());
+        }
+        if (linkdoc.getDes() != " ") {
+            linkDoc1.setDes(linkdoc.getDes());
         }
         linkDocService.save(linkDoc1);
         return new ResponseEntity(HttpStatus.OK);

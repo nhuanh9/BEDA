@@ -57,7 +57,7 @@ public class LinkDocController {
 
     @GetMapping("/des/{des}")
     public ResponseEntity<Iterable<LinkDoc>> getAllByDes(@PathVariable("des") String des) {
-        Iterable<LinkDoc> linkDocs = linkDocService.findAllByDescriptionContains(des);
+        Iterable<LinkDoc> linkDocs = linkDocService.findAllByDesContains(des);
         return new ResponseEntity<>(linkDocs, HttpStatus.OK);
     }
 }
