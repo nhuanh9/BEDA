@@ -122,16 +122,19 @@ public class UserController {
         Optional<User> userOptional = this.userService.findById(id);
         return userOptional.map(user -> new ResponseEntity<>(user, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
     @GetMapping("/users/top-posts")
     public ResponseEntity<Iterable<User>> getTopPosts() {
         Iterable<User> users = this.userService.findTopPosts();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
     @GetMapping("/users/top-linkdocs")
     public ResponseEntity<Iterable<User>> getTopLinkDocs() {
         Iterable<User> users = this.userService.findTopLinkDocs();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
     @GetMapping("/users/top-comments")
     public ResponseEntity<Iterable<User>> getTopComments() {
         Iterable<User> users = this.userService.findTopComments();
@@ -216,21 +219,49 @@ public class UserController {
 
     @PutMapping("/users/{idUser}/posts")
     public ResponseEntity editPost(@RequestBody Post postModel, @PathVariable Long idUser) {
-        User user = (userService.findById(idUser)).isPresent() ?
-                userService.findById(idUser).get() : null;
         Post postEntity = postService.findById(postModel.getId()).get();
-        postEntity.setContent(postModel.getContent());
+        if (postModel.getCategory() != null) {
+            postEntity.setCategory(postModel.getCategory());
+        }
+        if (postModel.getContent() != null) {
+            postEntity.setContent(postModel.getContent());
+        }
+        if (postModel.getDescription() != null) {
+            postEntity.setDescription(postModel.getDescription());
+        }
         postService.save(postEntity);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/users/{idUser}/posts/{idPost}")
     public ResponseEntity deletePost(@PathVariable Long idUser, @PathVariable Long idPost) {
-        User user = (userService.findById(idUser)).isPresent() ?
-                userService.findById(idUser).get() : null;
         Post postEntity = postService.findById(idPost).get();
         postEntity.setStatus(0);
         postService.save(postEntity);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PutMapping("/users/{idUser}/linkdocs")
+    public ResponseEntity editLinkDoc(@RequestBody LinkDoc linkdoc, @PathVariable Long idUser) {
+        LinkDoc linkDoc1 = linkDocService.findById(linkdoc.getId()).get();
+        if (linkdoc.getCategory() !=null) {
+            linkDoc1.setCategory(linkdoc.getCategory());
+        }
+        if (linkdoc.getLink() !=null) {
+            linkDoc1.setLink(linkdoc.getLink());
+        }
+        if (linkdoc.getDescription() !=null) {
+            linkDoc1.setDescription(linkdoc.getDescription());
+        }
+        linkDocService.save(linkDoc1);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("/users/{idUser}/linkdocs/{idLinkDoc}")
+    public ResponseEntity deleteLinkDoc(@PathVariable Long idUser, @PathVariable Long idLinkDoc) {
+        LinkDoc linkDoc = linkDocService.findById(idLinkDoc).get();
+        linkDoc.setStatus(0);
+        linkDocService.save(linkDoc);
         return new ResponseEntity(HttpStatus.OK);
     }
 }

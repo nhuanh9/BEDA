@@ -41,7 +41,6 @@ public class PostController {
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
-
     @GetMapping
     public ResponseEntity<Iterable<Post>> getAll() {
         Iterable<Post> posts = postService.findAllOrderByCreateAt();
