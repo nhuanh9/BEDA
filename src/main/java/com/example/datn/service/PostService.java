@@ -27,4 +27,6 @@ public interface PostService extends IGeneralService<Post> {
     Iterable<Post> findAllByDescriptionContains(String des);
 
     Iterable<Post> findAllOrderByCreateAt();
+
+    Iterable<Post> findAllAdminPost();
 }

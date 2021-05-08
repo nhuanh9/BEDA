@@ -28,7 +28,7 @@ public interface IPostRepository extends JpaRepository<Post, Long> {
     Optional<Post> findById(Long id);
 
     @Modifying
-    @Query(value = "select * from Post where status = 1 and user_id = :id", nativeQuery = true)
+    @Query(value = "select * from Post where status != 0 and user_id = :id", nativeQuery = true)
     Iterable<Post> findAllByUserId(@Param("id") Long id);
 
     Iterable<Post> findAllByStatus(int status);
@@ -38,13 +38,17 @@ public interface IPostRepository extends JpaRepository<Post, Long> {
     Iterable<Post> findAllByCategoryId(@Param("id") Long id);
 
     @Modifying
-    @Query(value = "select * from Post where status = 1 order by likes", nativeQuery = true)
+    @Query(value = "select * from Post where status != 0 order by likes", nativeQuery = true)
     Iterable<Post> findAllByOrderByLikes();
 
     Iterable<Post> findAllByDescriptionContains(String des);
 
     @Modifying
-    @Query(value = "select * from Post where status = 1 order by create_at", nativeQuery = true)
+    @Query(value = "select * from Post where status != 0 order by create_at", nativeQuery = true)
     Iterable<Post> findAllOrderByCreateAt();
+
+    @Modifying
+    @Query(value = "select * from Post where status = 2 order by create_at", nativeQuery = true)
+    Iterable<Post> findAllAdminPost();
 
 }

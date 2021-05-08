@@ -75,6 +75,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Iterable<Post> findAllAdminPost() {
+        return postRepository.findAllAdminPost();
+    }
+
+    @Override
     public void remove(Long id) {
         postRepository.deleteById(id);
     }

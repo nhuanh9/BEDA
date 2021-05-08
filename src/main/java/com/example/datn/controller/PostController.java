@@ -47,6 +47,12 @@ public class PostController {
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
+    @GetMapping("/admin")
+    public ResponseEntity<Iterable<Post>> getAllAdminPost() {
+        Iterable<Post> posts = postService.findAllAdminPost();
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
     @GetMapping("/categories/{categoryId}")
     public ResponseEntity<Iterable<Post>> getAllByCategoryId(@PathVariable Long categoryId) {
         Iterable<Post> linkDocs = postService.findAllByCategoryId(categoryId);
@@ -57,7 +63,6 @@ public class PostController {
     public ResponseEntity<Post> save(@RequestBody Post post) {
         Date date = new Date(Calendar.getInstance().getTime().getTime());
         post.setCreateAt(date);
-        post.setStatus(1);
         post.setLikes((long) 0);
         postService.save(post);
         User user = post.getUser();
