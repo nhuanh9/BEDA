@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.Optional;
 
 @RestController
 @PropertySource("classpath:application.properties")
@@ -59,5 +60,16 @@ public class LinkDocController {
     public ResponseEntity<Iterable<LinkDoc>> getAllByDes(@PathVariable("des") String des) {
         Iterable<LinkDoc> linkDocs = linkDocService.findAllByDesContains(des);
         return new ResponseEntity<>(linkDocs, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        Optional<LinkDoc> linkDoc = linkDocService.findById(id);
+        if (!linkDoc.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        linkDoc.get().setStatus(0);
+        linkDocService.save(linkDoc.get());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
