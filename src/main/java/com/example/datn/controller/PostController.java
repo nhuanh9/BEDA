@@ -117,7 +117,8 @@ public class PostController {
         if (!post.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        postService.remove(id);
+        post.get().setStatus(0);
+        postService.save(post.get());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

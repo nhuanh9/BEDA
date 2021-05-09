@@ -48,7 +48,7 @@ public interface IPostRepository extends JpaRepository<Post, Long> {
     Iterable<Post> findAllOrderByCreateAt();
 
     @Modifying
-    @Query(value = "select * from Post where status = 2 order by create_at", nativeQuery = true)
+    @Query(value = "select * from Post where status = 2 order by id desc", nativeQuery = true)
     Iterable<Post> findAllAdminPost();
 
 }
