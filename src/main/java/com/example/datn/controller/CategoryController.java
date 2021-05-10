@@ -41,4 +41,10 @@ public class CategoryController {
         return new ResponseEntity<>(category.get(), HttpStatus.OK);
     }
 
+    @PostMapping
+    public ResponseEntity<Category> save(@RequestBody Category category) {
+        categoryService.save(category);
+        return new ResponseEntity<>(category, HttpStatus.OK);
+    }
+
 }
