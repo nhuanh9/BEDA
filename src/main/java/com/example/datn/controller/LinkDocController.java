@@ -49,9 +49,9 @@ public class LinkDocController {
         linkDoc.setLikes((long) 0);
         linkDocService.save(linkDoc);
         User user = linkDoc.getUser();
-        Long oldPosts = user.getPosts();
+        Long oldPosts = user.getLinkDocs();
         oldPosts = oldPosts == null ? Long.valueOf(0) : oldPosts;
-        user.setPosts(oldPosts + Long.valueOf(1));
+        user.setLinkDocs(oldPosts + Long.valueOf(1));
         userService.save(user);
         return new ResponseEntity(HttpStatus.OK);
     }

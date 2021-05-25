@@ -1,10 +1,7 @@
 package com.example.datn.controller;
 
 import com.example.datn.model.*;
-import com.example.datn.service.CommentService;
-import com.example.datn.service.PostLikeService;
-import com.example.datn.service.PostService;
-import com.example.datn.service.UserService;
+import com.example.datn.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
@@ -24,6 +21,9 @@ public class PostController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    ICategoryService categoryService;
     @Autowired
     CommentService commentService;
     @Autowired
@@ -101,9 +101,9 @@ public class PostController {
             postEntity.get().getListComment().add(commentForm);
             postService.save(postEntity.get());
             User user = commentForm.getUser();
-            Long oldPosts = user.getPosts();
+            Long oldPosts = user.getComments();
             oldPosts = oldPosts == null ? Long.valueOf(0) : oldPosts;
-            user.setPosts(oldPosts + Long.valueOf(1));
+            user.setComments(oldPosts + Long.valueOf(1));
             userService.save(user);
             return new ResponseEntity<>(postEntity, HttpStatus.OK);
         } else {

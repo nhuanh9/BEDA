@@ -30,6 +30,7 @@ public class LinkDoc {
     private Long likes;
 
     private String description;
+    private String linkFile;
     //    @OneToMany(targetEntity = Comment.class)
 //    private List<Comment> listComment;
     private String des;

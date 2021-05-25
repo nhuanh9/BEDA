@@ -21,6 +21,8 @@ public class Post {
 
     private String content;
 
+    private String detail;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
