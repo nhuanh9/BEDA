@@ -46,6 +46,5 @@ public class User implements Serializable {
     private Long posts;
     private Long comments;
     private Long linkDocs;
-
-
+    private int status;
 }

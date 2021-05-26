@@ -46,6 +46,8 @@ public class UserController {
 
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private ITUTCService itutcService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -292,4 +294,11 @@ public class UserController {
         linkDocService.save(linkDoc);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @GetMapping("/itutcs")
+    public ResponseEntity<Iterable<ITUTC>> getAllITUTC() {
+        Iterable<ITUTC> itutcs = itutcService.findAll();
+        return new ResponseEntity<>(itutcs, HttpStatus.OK);
+    }
+
 }
