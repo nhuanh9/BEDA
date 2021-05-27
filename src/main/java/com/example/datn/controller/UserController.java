@@ -171,6 +171,7 @@ public class UserController {
         user.setLinkDocs(userOptional.get().getLinkDocs());
         user.setPosts(userOptional.get().getPosts());
         user.setComments(userOptional.get().getComments());
+        user.setStatus(userOptional.get().getStatus());
         userService.save(user);
         //
         return new ResponseEntity<>(user, HttpStatus.OK);
