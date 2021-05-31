@@ -166,12 +166,13 @@ public class UserController {
         user.setEmail(userOptional.get().getEmail());
         user.setEnabled(userOptional.get().isEnabled());
         user.setPassword(userOptional.get().getPassword());
-        user.setRoles(userOptional.get().getRoles());
+        if (user.getRoles().size() == 1)
+            user.setRoles(userOptional.get().getRoles());
         user.setConfirmPassword(userOptional.get().getConfirmPassword());
         user.setLinkDocs(userOptional.get().getLinkDocs());
         user.setPosts(userOptional.get().getPosts());
         user.setComments(userOptional.get().getComments());
-        if (user.getStatus() ==0) user.setStatus(userOptional.get().getStatus());
+        if (user.getStatus() == 0) user.setStatus(userOptional.get().getStatus());
         userService.save(user);
         //
         return new ResponseEntity<>(user, HttpStatus.OK);
