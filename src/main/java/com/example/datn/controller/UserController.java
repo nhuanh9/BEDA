@@ -166,7 +166,7 @@ public class UserController {
         user.setEmail(userOptional.get().getEmail());
         user.setEnabled(userOptional.get().isEnabled());
         user.setPassword(userOptional.get().getPassword());
-        if (user.getRoles().size() == 1)
+        if (user.getRoles() == null || user.getRoles().size() == 1 )
             user.setRoles(userOptional.get().getRoles());
         user.setConfirmPassword(userOptional.get().getConfirmPassword());
         user.setLinkDocs(userOptional.get().getLinkDocs());
