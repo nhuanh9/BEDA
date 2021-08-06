@@ -26,6 +26,7 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;

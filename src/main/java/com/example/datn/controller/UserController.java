@@ -108,12 +108,11 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+        Authentication authentication = authenticationManager.authenticate( // spring security tạo ra 1 đối tượng authentication có thôn tin người dùng
+                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())); // bao gồm: id, username, password, roles
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        String jwt = jwtService.generateTokenLogin(authentication);
+        SecurityContextHolder.getContext().setAuthentication(authentication); // bước phân quyền của spring security
+        String jwt = jwtService.generateTokenLogin(authentication); // tạo jwt
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User currentUser = userService.findByUsername(user.getUsername());
         return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), userDetails.getAuthorities()));

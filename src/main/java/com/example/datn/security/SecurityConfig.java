@@ -26,7 +26,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
-public class SecurityConfig  extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserService userService() {
@@ -78,12 +78,12 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                         "/forgot-password",
                         "/new-password/**",
                         "/users/**",
-                        "/role").permitAll()
+                        "/role").permitAll() //những api ko cần đăng nhập vẫn sử dụng được
                 .antMatchers(HttpMethod.GET
-                        ).access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-                .antMatchers(HttpMethod.DELETE, "/api/admin/**").access("hasRole('ROLE_ADMIN')")
-                .antMatchers(HttpMethod.PUT, "/users").access("hasRole('ROLE_USER')")
-                .anyRequest().authenticated()
+                        ).access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')") // method get thì chỉ có user/admin mới có thể truy cập
+                .antMatchers(HttpMethod.DELETE, "/api/admin/**").access("hasRole('ROLE_ADMIN')") // admin chỉ được quyền xoá
+                .antMatchers(HttpMethod.PUT, "/users").access("hasRole('ROLE_USER')") // chỉ user mới có quyền sửa
+                .anyRequest().authenticated() // các api còn lại chỉ cần đăng nhập
                 .and().csrf().disable()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
